@@ -2,875 +2,610 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Aice 冰柜巡检系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Aice Freezer Inspection</title>
     <style>
+        /* ===== RESET & VARIABLES ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
-        
+
+        :root {
+            --primary: #e31e24;
+            --primary-dark: #c41a1f;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
         body {
-            background: #f5f5f5;
+            background: var(--bg);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 16px;
         }
-        
-        :root {
-            --aice-red: #e31e24;
-            --aice-red-light: #ff6b6b;
-            --aice-red-dark: #c41a1f;
+
+        .hidden {
+            display: none !important;
         }
-        
+
+        /* ===== LOGIN PAGE ===== */
         .login-container {
             max-width: 400px;
-            width: 90%;
+            width: 100%;
             margin: 0 auto;
-            background: white;
-            border-radius: 30px;
-            padding: 40px 30px;
-            box-shadow: 0 20px 60px rgba(227, 30, 36, 0.15);
-            border: 1px solid rgba(227, 30, 36, 0.1);
+            background: var(--card);
+            border-radius: 32px;
+            padding: 32px 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
-        
+
         .logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .logo h1 {
-            color: var(--aice-red);
-            font-size: 72px;
-            font-weight: bold;
+            color: var(--primary);
+            font-size: 64px;
+            font-weight: 700;
             font-style: italic;
-            letter-spacing: 2px;
-            text-shadow: 3px 3px 0 rgba(227, 30, 36, 0.1);
-            margin-bottom: 5px;
             line-height: 1;
+            margin-bottom: 8px;
         }
 
         .brand-line {
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--aice-red), transparent);
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
             width: 80px;
-            margin: 15px auto;
+            margin: 16px auto;
         }
 
         .tagline {
-            margin: 20px 0 30px;
             font-size: 20px;
-            letter-spacing: 2px;
-            color: #333;
             font-weight: 500;
+            color: var(--text);
+            white-space: nowrap;
+            margin: 20px 0 28px;
         }
 
         .tagline span {
-            color: var(--aice-red);
-            font-weight: bold;
+            color: var(--primary);
+            font-weight: 700;
             font-style: italic;
         }
-        
+
         .input-group {
             margin-bottom: 20px;
         }
-        
+
         .input-group label {
             display: block;
-            color: #333;
+            color: var(--text-light);
             font-size: 14px;
-            margin-bottom: 5px;
             font-weight: 500;
+            margin-bottom: 6px;
         }
-        
+
         .input-group input {
             width: 100%;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
+            padding: 16px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
             font-size: 16px;
-            transition: 0.3s;
+            background: var(--bg);
         }
-        
+
         .input-group input:focus {
             outline: none;
-            border-color: var(--aice-red);
-            box-shadow: 0 0 0 3px rgba(227, 30, 36, 0.1);
+            border-color: var(--primary);
         }
-        
+
         .remember {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin: 16px 0 24px;
         }
-        
+
         .remember input {
-            margin-right: 8px;
-            accent-color: var(--aice-red);
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
         }
-        
+
         .login-btn {
             width: 100%;
-            padding: 15px;
-            background: var(--aice-red);
+            padding: 16px;
+            background: var(--primary);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 100px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
-        
-        .login-btn:hover {
-            background: var(--aice-red-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(227, 30, 36, 0.3);
-        }
-        
+
+        /* ===== MAIN CONTAINER ===== */
         .main-container {
             max-width: 500px;
+            width: 100%;
             margin: 0 auto;
-            background: white;
+            background: var(--card);
             min-height: 100vh;
             position: relative;
-            box-shadow: 0 0 30px rgba(0,0,0,0.05);
         }
-        
+
         .header {
-            background: var(--aice-red);
-            padding: 15px 20px;
+            background: var(--primary);
+            padding: 16px 20px;
             color: white;
-            position: relative;
-            overflow: hidden;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-        
-        .header::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            bottom: -50%;
-            left: -50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-        
+
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 8px;
         }
-        
+
         .lang-switch {
             display: flex;
-            gap: 10px;
-            background: rgba(255,255,255,0.2);
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.15);
             padding: 4px;
-            border-radius: 30px;
-            backdrop-filter: blur(5px);
+            border-radius: 40px;
         }
-        
+
         .lang-btn {
-            padding: 4px 16px;
-            border-radius: 30px;
+            padding: 6px 16px;
+            border-radius: 40px;
             font-size: 13px;
-            cursor: pointer;
-            transition: 0.3s;
             font-weight: 500;
+            cursor: pointer;
             color: white;
         }
-        
+
         .lang-btn.active {
             background: white;
-            color: var(--aice-red);
-            font-weight: bold;
+            color: var(--primary);
+            font-weight: 600;
         }
-        
+
         .user-info {
             display: flex;
             align-items: center;
-            gap: 15px;
-            position: relative;
-            z-index: 1;
+            gap: 12px;
         }
-        
+
         .user-name {
-            font-size: 16px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(255,255,255,0.2);
-            padding: 5px 12px;
-            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 40px;
         }
-        
-        .user-name::before {
-            content: '👤';
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
+
         .logout-btn {
-            background: rgba(255,255,255,0.2);
-            padding: 5px 12px;
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 40px;
             font-size: 13px;
             cursor: pointer;
-            backdrop-filter: blur(5px);
-            transition: 0.3s;
         }
-        
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
+
         .date {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.9;
-            margin-top: 5px;
-            position: relative;
-            z-index: 1;
+        }
+
+        .nav-bar {
             display: flex;
-            align-items: center;
-            gap: 5px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 76px;
+            z-index: 9;
+            padding: 4px;
         }
-        
-        .date::before {
-            content: '📅';
-            font-size: 14px;
-        }
-        
-        .brand-footer {
+
+        .nav-item {
+            flex: 1;
             text-align: center;
-            padding: 15px;
-            font-size: 12px;
-            color: #999;
-            border-top: 1px solid #eee;
-            background: white;
+            padding: 12px 8px;
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 30px;
         }
-        
-        .brand-footer span {
-            color: var(--aice-red);
-            font-weight: bold;
+
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(227, 30, 36, 0.05);
+            font-weight: 600;
         }
-        
+
+        .content {
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
         .stats-card {
-            background: white;
-            margin: 15px;
+            background: var(--card);
+            border-radius: 24px;
             padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            border: 1px solid #f0f0f0;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
         }
-        
+
         .stats-title {
             font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
-        .stats-title::before {
-            content: '📊';
-            font-size: 20px;
-        }
-        
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 12px;
         }
-        
+
         .stat-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 12px;
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 16px;
             text-align: center;
         }
-        
+
         .stat-value {
             font-size: 32px;
-            font-weight: bold;
-            color: var(--aice-red);
-            line-height: 1.2;
+            font-weight: 700;
+            color: var(--primary);
         }
-        
+
         .stat-label {
             font-size: 13px;
-            color: #666;
-            margin-top: 5px;
+            color: var(--text-light);
+            margin-top: 4px;
         }
-        
-        .region-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .region-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 12px;
-        }
-        
-        .region-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .region-name {
-            font-weight: bold;
-            font-size: 16px;
-            color: #333;
-        }
-        
-        .region-stats {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .region-count {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .region-percent {
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-        
-        .region-percent.high {
-            background: #e8f5e9;
-            color: #00a65a;
-        }
-        
-        .region-percent.medium {
-            background: #fff3e0;
-            color: #ff9800;
-        }
-        
-        .region-percent.low {
-            background: #ffebee;
-            color: #ff4444;
-        }
-        
+
         .progress-bar {
             height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
+            background: var(--border);
+            border-radius: 100px;
             overflow: hidden;
+            margin: 8px 0;
         }
-        
+
         .progress-fill {
             height: 100%;
-            background: var(--aice-red);
-            border-radius: 4px;
-            transition: width 0.3s;
+            background: var(--primary);
+            border-radius: 100px;
         }
-        
+
         .freezer-id {
-            font-weight: bold;
-            font-size: 16px;
-            color: var(--aice-red);
+            font-weight: 600;
+            color: var(--primary);
             background: rgba(227, 30, 36, 0.05);
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 4px 12px;
+            border-radius: 30px;
         }
-        
+
         .task-list {
-            padding: 0 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        
+
         .task-item {
-            background: white;
-            border: 1px solid #f0f0f0;
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 12px;
-            transition: 0.3s;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 16px;
         }
-        
+
         .task-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
         }
-        
+
         .shop-name {
-            font-weight: bold;
-            font-size: 16px;
+            font-weight: 600;
+            font-size: 15px;
         }
-        
+
         .shop-details {
-            color: #666;
-            font-size: 14px;
-            margin: 5px 0;
+            color: var(--text-light);
+            font-size: 13px;
+            margin-bottom: 12px;
         }
-        
+
         .task-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        
-        .time {
-            color: #999;
-            font-size: 13px;
-        }
-        
+
         .photo-btn {
-            background: var(--aice-red);
+            background: var(--primary);
             color: white;
             border: none;
             padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s;
+            border-radius: 40px;
+            font-size: 13px;
             font-weight: 500;
+            cursor: pointer;
         }
-        
-        .photo-btn:hover {
-            background: var(--aice-red-dark);
-            transform: scale(1.02);
-        }
-        
+
         .photo-btn.completed {
-            background: #00a65a;
+            background: var(--success);
         }
-        
+
         .photo-btn:disabled {
-            background: #ccc;
+            background: var(--border);
             cursor: not-allowed;
         }
-        
-        .photo-preview {
-            width: 100%;
-            height: 200px;
-            background: #f5f5f5;
-            border-radius: 10px;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            overflow: hidden;
-        }
-        
-        .photo-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .camera-btn {
-            background: #333;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            width: 100%;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 10px 0;
-        }
-        
-        .upload-btn {
-            background: var(--aice-red);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            width: 100%;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        
-        .remark-section {
-            background: #fef5f5;
-            border-radius: 16px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 1px solid rgba(227, 30, 36, 0.2);
-        }
-        
-        .remark-title {
-            font-weight: bold;
-            color: var(--aice-red);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .remark-title::before {
-            content: '📝';
-        }
-        
-        .remark-select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ffcdd2;
-            border-radius: 12px;
-            font-size: 14px;
-            margin-bottom: 10px;
-            background: white;
-            color: #333;
-        }
-        
-        .remark-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ffcdd2;
-            border-radius: 12px;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        
-        .remark-input:focus {
-            outline: none;
-            border-color: var(--aice-red);
-            box-shadow: 0 0 0 3px rgba(227, 30, 36, 0.1);
-        }
-        
-        .remark-badge {
-            background: #fff3e0;
-            color: #e65100;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            display: inline-block;
-            margin: 5px 0;
-            border: 1px solid #ffe0b2;
-        }
-        
-        .remark-detail {
-            background: #f5f5f5;
-            padding: 10px;
-            border-radius: 12px;
-            font-size: 13px;
-            color: #666;
-            margin-top: 5px;
-            border-left: 3px solid var(--aice-red);
-        }
-        
-        .sync-card {
-            background: white;
-            margin: 15px;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--aice-red);
-        }
-        
+
         .sync-textarea {
             width: 100%;
             height: 100px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
             margin: 10px 0;
-            font-size: 14px;
         }
-        
+
         .sync-btn {
-            background: var(--aice-red);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 30px;
             width: 100%;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
         }
-        
-        .region-tasks {
-            background: white;
-            margin: 15px;
-            padding: 20px;
-            border-radius: 12px;
-        }
-        
-        .region-title {
-            font-weight: bold;
-            margin: 15px 0 10px;
-            color: var(--aice-red);
-        }
-        
+
         .freezer-tag {
             display: inline-block;
-            background: #f0f0f0;
-            padding: 5px 12px;
-            border-radius: 20px;
-            margin: 0 5px 5px 0;
-            font-size: 13px;
+            background: var(--bg);
+            padding: 4px 12px;
+            border-radius: 30px;
+            margin: 4px;
+            font-size: 12px;
         }
-        
-        .nav-bar {
-            display: flex;
-            background: white;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
+
+        .brand-footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 12px;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+            background: var(--card);
+            position: fixed;
+            bottom: 0;
             width: 100%;
             max-width: 500px;
-            z-index: 100;
-            padding: 5px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
-        
-        .nav-item {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            color: #666;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.3s;
-            position: relative;
-            font-weight: 500;
+
+        .brand-footer span {
+            color: var(--primary);
+            font-weight: 600;
         }
-        
-        .nav-item.active {
-            color: var(--aice-red);
-            font-weight: bold;
-        }
-        
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 3px;
-            background: var(--aice-red);
-            border-radius: 3px;
-        }
-        
-        .search-box {
-            margin: 15px;
-            padding: 10px;
-            background: white;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .search-box input {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            font-size: 16px;
-        }
-        
-        .search-box input:focus {
-            outline: none;
-        }
-        
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #eee;
-        }
-        
-        .stat-label {
-            color: #666;
-        }
-        
-        .stat-value {
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .stat-value.warning {
-            color: #ff4444;
-        }
-        
-        .stat-value.success {
-            color: #00a65a;
-        }
-        
-        .history-item {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .history-time {
-            color: #999;
-            font-size: 12px;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            background: #00a65a;
-            color: white;
-        }
-        
-        .badge.warning {
-            background: #ffaa00;
-        }
-        
-        .badge.danger {
-            background: #ff4444;
-        }
-        
-        .photo-thumb {
-            width: 100%;
-            max-height: 150px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-        
-        .fullscreen-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .fullscreen-modal img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
+
+        /* ===== PHOTO MODAL ===== */
         #photoModal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-y: auto;
-            padding: 20px;
+            padding: 16px;
         }
-        
+
         #photoModal > div {
-            background: white;
+            background: var(--card);
             width: 100%;
             max-width: 450px;
-            padding: 25px;
-            border-radius: 30px;
+            border-radius: 32px;
+            padding: 24px;
             max-height: 90vh;
             overflow-y: auto;
-            border: 2px solid var(--aice-red);
         }
-        
+
         .modal-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--aice-red);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--aice-red);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .photo-preview {
+            width: 100%;
+            height: 200px;
+            background: var(--bg);
+            border-radius: 20px;
+            margin: 12px 0;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            color: var(--text-light);
+            overflow: hidden;
+            border: 1px dashed var(--border);
         }
-        
-        .modal-title::before {
-            content: '📸';
-            font-size: 24px;
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        
-        .hidden {
-            display: none !important;
+
+        .camera-btn {
+            background: var(--text);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            width: 100%;
+            font-size: 15px;
+            cursor: pointer;
+            margin: 12px 0;
+        }
+
+        .remark-section {
+            background: rgba(227, 30, 36, 0.03);
+            border-radius: 20px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .remark-select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .remark-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 14px;
+        }
+
+        .upload-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 30px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .photo-thumb {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .fullscreen-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: black;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .fullscreen-modal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        @media (max-width: 380px) {
+            .logo h1 { font-size: 52px; }
+            .tagline { font-size: 18px; }
+            .top-bar { flex-direction: column; align-items: flex-start; }
+            .user-info { width: 100%; justify-content: space-between; }
+            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <!-- 登录页 -->
+        <!-- LOGIN PAGE -->
         <div id="loginPage" class="login-container">
             <div class="logo">
                 <h1>Aice</h1>
                 <div class="brand-line"></div>
-                <div class="tagline">
+                <div class="tagline" id="loginTagline">
                     HAVE AN <span>AICE</span> DAY
                 </div>
             </div>
             
             <div class="input-group">
-                <label>编号</label>
+                <label id="usernameLabel">编号</label>
                 <input type="text" id="username" placeholder="001-005" value="001">
             </div>
             
             <div class="input-group">
-                <label>密码</label>
+                <label id="passwordLabel">密码</label>
                 <input type="password" id="password" placeholder="123456" value="123456">
             </div>
             
             <div class="remember">
                 <input type="checkbox" id="remember" checked>
-                <label for="remember">记住登录状态</label>
+                <label for="remember" id="rememberLabel">记住登录状态</label>
             </div>
             
-            <button class="login-btn" onclick="handleLogin()">登录</button>
+            <button class="login-btn" onclick="handleLogin()" id="loginBtn">登录</button>
         </div>
 
-        <!-- 主页面 -->
+        <!-- MAIN PAGE -->
         <div id="mainPage" class="main-container hidden">
             <div class="header">
                 <div class="top-bar">
                     <div class="lang-switch">
-                        <span class="lang-btn active" onclick="switchLanguage('zh')">中文</span>
-                        <span class="lang-btn" onclick="switchLanguage('en')">English</span>
+                        <span class="lang-btn active" onclick="switchLanguage('zh')" id="langZhBtn">中文</span>
+                        <span class="lang-btn" onclick="switchLanguage('en')" id="langEnBtn">English</span>
                     </div>
                     <div class="user-info">
                         <span class="user-name" id="displayName"></span>
-                        <span class="logout-btn" onclick="logout()">退出</span>
+                        <span class="logout-btn" onclick="logout()" id="logoutBtn">退出</span>
                     </div>
                 </div>
                 <div class="date" id="currentDate"></div>
@@ -884,76 +619,69 @@
             </div>
         </div>
 
-        <!-- 拍照模态框 -->
+        <!-- PHOTO MODAL -->
         <div id="photoModal" class="hidden">
             <div>
-                <div class="modal-title">拍照上传 - <span id="modalFreezerId"></span></div>
+                <div class="modal-title">
+                    <span id="photoModalTitle">拍照上传</span> - <span id="modalFreezerId"></span>
+                </div>
                 
-                <div style="margin-bottom: 20px;">
-                    <div style="font-weight: bold; color: #333; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">
-                        <span style="background: var(--aice-red); color: white; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px;">1</span>
-                        <span>拍照</span>
+                <div>
+                    <div style="font-weight: 600; margin-bottom: 10px;">
+                        <span style="background: var(--primary); color: white; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;">1</span>
+                        <span id="step1Title">拍照</span>
                     </div>
-                    <div id="camera-preview" class="photo-preview">
-                        相机预览区域
-                    </div>
+                    <div id="camera-preview" class="photo-preview">相机预览区域</div>
                     <input type="file" id="camera-input" accept="image/*" capture="environment" style="display: none;">
-                    <button class="camera-btn" onclick="openCamera()">打开相机</button>
+                    <button class="camera-btn" onclick="openCamera()" id="openCameraBtn">打开相机</button>
                 </div>
                 
                 <div class="remark-section">
-                    <div class="remark-title">
-                        <span style="background: var(--aice-red); color: white; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; margin-right: 8px;">2</span>
-                        备注
+                    <div style="font-weight: 600; margin-bottom: 12px;">
+                        <span style="background: var(--primary); color: white; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;">2</span>
+                        <span id="step2Title">备注</span>
                     </div>
+                    
                     <select class="remark-select" id="remarkType">
                         <option value="normal">冰柜正常</option>
                         <option value="unused">冰柜未使用</option>
-                        <option value="dirty_inside">冰柜内部脏了，需清洁</option>
-                        <option value="other_ad">冰柜外部有其他广告</option>
-                        <option value="temperature">冰柜温度异常</option>
-                        <option value="damaged">冰柜有损坏</option>
+                        <option value="dirty_inside">冰柜内部脏了</option>
+                        <option value="other_ad">外部有其他广告</option>
+                        <option value="temperature">温度异常</option>
+                        <option value="damaged">冰柜损坏</option>
                         <option value="other">其他问题</option>
                     </select>
                     
-                    <input type="text" class="remark-input" id="remarkDetail" placeholder="详细说明（选填，最多100字）" maxlength="100" value="">
-                    <div style="text-align: right; font-size: 12px; color: #999; margin-top: 5px;">
-                        <span id="charCount">0</span>/100
+                    <input type="text" class="remark-input" id="remarkDetail" placeholder="详细说明（选填，最多200字）" maxlength="200">
+                    <div style="text-align: right; font-size: 12px; margin-top: 6px;">
+                        <span id="charCount">0</span>/200
                     </div>
                 </div>
                 
-                <button class="upload-btn" onclick="uploadPhoto()">确认上传</button>
-                <button style="background: #999; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; margin-top: 10px; cursor: pointer;" onclick="closePhotoModal()">取消</button>
+                <button class="upload-btn" onclick="uploadPhoto()" id="uploadBtn">确认上传</button>
+                <button style="background: var(--text-light); color: white; border: none; padding: 14px; border-radius: 30px; width: 100%; margin-top: 10px;" onclick="closePhotoModal()" id="cancelBtn">取消</button>
             </div>
         </div>
 
-        <!-- 图片全屏查看模态框 -->
+        <!-- FULLSCREEN IMAGE MODAL -->
         <div id="fullscreenModal" class="fullscreen-modal hidden" onclick="closeFullscreen()">
-            <img id="fullscreenImage" src="" alt="">
+            <img id="fullscreenImage" src="">
         </div>
     </div>
 
     <script>
-        // ========== Google Sheets 数据链接 ==========
+        // ===== CONFIG =====
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRw6l0RVWFFp1KX7cJbWn9lZDHBNNWBV9Im8QEXxjRBoTKTEe5eFIMxtP8Bb8Y3WmOXEu2RIU6kAEVt/pub?output=csv';
 
-        // ========== 全局变量 ==========
+        // ===== GLOBAL STATE =====
         let freezers = [];
         let currentUser = null;
         let currentFreezer = null;
         let currentLang = localStorage.getItem('language') || 'zh';
-        
-        // 拍照记录
         let photos = JSON.parse(localStorage.getItem('photos')) || [];
+        let todayTasks = { A: [], B: [], C: [] };
 
-        // 今日任务（从WhatsApp同步）
-        let todayTasks = {
-            A: [],
-            B: [],
-            C: []
-        };
-
-        // ========== 账号数据 ==========
+        // ===== USERS =====
         const users = {
             '001': { password: '123456', role: 'sales', region: 'A', name: '业务员001', nameEn: 'Sales 001' },
             '002': { password: '123456', role: 'sales', region: 'B', name: '业务员002', nameEn: 'Sales 002' },
@@ -962,79 +690,53 @@
             '005': { password: '123456', role: 'boss', name: '老板', nameEn: 'Boss' }
         };
 
-        // ========== 多语言文案 ==========
+        // ===== TRANSLATIONS =====
         const translations = {
             zh: {
-                todayTasks: '今日任务',
-                myRecords: '我的记录',
-                progress: '进度',
-                waiting: '待拍照',
-                completed: '已完成',
-                photo: '拍照',
-                syncTasks: '同步任务',
-                freezerSearch: '冰柜查询',
-                regionStats: '区域统计',
-                alerts: '预警',
-                overview: '总览',
-                regions: '区域详情',
-                salesmen: '业务员',
-                totalFreezers: '总冰柜',
-                todayPhotos: '今日拍照',
-                weekPhotos: '本周拍照',
-                monthPhotos: '本月拍照',
-                overdue: '超期未拍',
-                warning: '即将超期',
-                search: '搜索',
-                sync: '解析并同步',
-                remarkNormal: '冰柜正常',
-                remarkUnused: '冰柜未使用',
-                remarkDirtyInside: '冰柜内部脏了，需清洁',
-                remarkOtherAd: '冰柜外部有其他广告',
-                remarkTemperature: '冰柜温度异常',
-                remarkDamaged: '冰柜有损坏',
-                remarkOther: '其他问题',
-                remarkDetailPlaceholder: '详细说明（选填，最多100字）'
+                usernameLabel: '编号', passwordLabel: '密码', rememberLabel: '记住登录状态',
+                loginBtn: '登录', logoutBtn: '退出',
+                step1Title: '拍照', step2Title: '备注', openCameraBtn: '打开相机',
+                uploadBtn: '确认上传', cancelBtn: '取消', cameraPreview: '相机预览区域',
+                photoModalTitle: '拍照上传',
+                todayTasks: '今日任务', myRecords: '我的记录', progress: '进度',
+                waiting: '待拍照', completed: '已完成', photo: '拍照',
+                syncTasks: '同步任务', freezerSearch: '冰柜查询', regionStats: '区域统计', alerts: '预警',
+                overview: '总览', regions: '区域详情', salesmen: '业务员',
+                totalFreezers: '总冰柜', todayPhotos: '今日拍照',
+                weekPhotos: '本周拍照', monthPhotos: '本月拍照',
+                overdue: '超期未拍', warning: '即将超期',
+                search: '搜索', sync: '解析并同步',
+                remarkNormal: '冰柜正常', remarkUnused: '冰柜未使用',
+                remarkDirtyInside: '冰柜内部脏了', remarkOtherAd: '外部有其他广告',
+                remarkTemperature: '温度异常', remarkDamaged: '冰柜损坏',
+                remarkOther: '其他问题', remarkDetailPlaceholder: '详细说明（选填，最多200字）',
+                loginTagline: 'HAVE AN <span>AICE</span> DAY'
             },
             en: {
-                todayTasks: "Today's Tasks",
-                myRecords: 'My Records',
-                progress: 'Progress',
-                waiting: 'Pending',
-                completed: 'Completed',
-                photo: 'Photo',
-                syncTasks: 'Sync Tasks',
-                freezerSearch: 'Freezer Search',
-                regionStats: 'Region Stats',
-                alerts: 'Alerts',
-                overview: 'Overview',
-                regions: 'Regions',
-                salesmen: 'Salesmen',
-                totalFreezers: 'Total Freezers',
-                todayPhotos: "Today's Photos",
-                weekPhotos: 'This Week',
-                monthPhotos: 'This Month',
-                overdue: 'Overdue',
-                warning: 'Warning',
-                search: 'Search',
-                sync: 'Sync',
-                remarkNormal: 'Freezer normal',
-                remarkUnused: 'Freezer not in use',
-                remarkDirtyInside: 'Inside dirty, needs cleaning',
-                remarkOtherAd: 'Other ads on freezer',
-                remarkTemperature: 'Temperature abnormal',
-                remarkDamaged: 'Freezer damaged',
-                remarkOther: 'Other issues',
-                remarkDetailPlaceholder: 'Details (optional, max 100 chars)'
+                usernameLabel: 'ID', passwordLabel: 'Password', rememberLabel: 'Remember me',
+                loginBtn: 'LOGIN', logoutBtn: 'Logout',
+                step1Title: 'Take Photo', step2Title: 'Remark', openCameraBtn: 'Open Camera',
+                uploadBtn: 'Upload', cancelBtn: 'Cancel', cameraPreview: 'Camera Preview',
+                photoModalTitle: 'Photo Upload',
+                todayTasks: "Today's Tasks", myRecords: 'My Records', progress: 'Progress',
+                waiting: 'Pending', completed: 'Completed', photo: 'Photo',
+                syncTasks: 'Sync Tasks', freezerSearch: 'Search', regionStats: 'Region Stats', alerts: 'Alerts',
+                overview: 'Overview', regions: 'Regions', salesmen: 'Salesmen',
+                totalFreezers: 'Total', todayPhotos: 'Today',
+                weekPhotos: 'Week', monthPhotos: 'Month',
+                overdue: 'Overdue', warning: 'Warning',
+                search: 'Search', sync: 'Sync',
+                remarkNormal: '✅ Freezer Normal', remarkUnused: '⭕ Not in Use',
+                remarkDirtyInside: '🧹 Inside Dirty', remarkOtherAd: '📢 Other Ads',
+                remarkTemperature: '🌡️ Temperature', remarkDamaged: '🔧 Damaged',
+                remarkOther: '❓ Other', remarkDetailPlaceholder: 'Details (max 200 chars)',
+                loginTagline: 'HAVE AN <span>AICE</span> DAY'
             }
         };
 
-        // ========== 工具函数 ==========
+        // ===== UTILS =====
         function getRegion(salesPerson) {
-            const map = {
-                '1': 'A',
-                '2': 'B', 
-                '3': 'C'
-            };
+            const map = { '1': 'A', '2': 'B', '3': 'C' };
             return map[salesPerson?.trim()] || 'A';
         }
 
@@ -1052,91 +754,118 @@
             return map[type] || t.remarkNormal;
         }
 
-        // ========== 从 Google Sheets 加载数据 ==========
+        // ===== LOAD FREEZERS =====
         async function loadFreezersFromSheet() {
             try {
-                const response = await fetch(CSV_URL);
-                const csv = await response.text();
+                const res = await fetch(CSV_URL);
+                const csv = await res.text();
+                const lines = csv.split('\n').slice(2).filter(l => l.includes('FZ-'));
                 
-                const lines = csv.split('\n');
-                const dataLines = lines.slice(2).filter(line => line.trim() && line.includes('FZ-'));
-                
-                freezers = dataLines.map(line => {
-                    const values = line.split(',');
+                freezers = lines.map(line => {
+                    const v = line.split(',');
                     return {
-                        id: values[0]?.trim(),           // 保持原始格式 FZ-A00006
-                        region: getRegion(values[1]),
-                        shop: values[2]?.trim(),
-                        owner: values[3]?.trim(),
-                        phone: values[4]?.trim(),
-                        status: values[5]?.trim() || '已投放'
+                        id: v[0]?.trim(),
+                        region: getRegion(v[1]),
+                        shop: v[2]?.trim(),
+                        owner: v[3]?.trim(),
+                        phone: v[4]?.trim(),
+                        status: v[5]?.trim() || 'active'
                     };
                 }).filter(f => f.id);
                 
-                console.log(`✅ 已加载 ${freezers.length} 台冰柜`);
-                console.log('示例编号:', freezers.slice(0, 3).map(f => f.id));
-            } catch (error) {
-                console.error('❌ 加载失败，使用默认数据', error);
+                console.log(`✅ Loaded ${freezers.length} freezers`);
+            } catch (e) {
+                console.log('Using default data');
                 freezers = [
-                    { id: 'FZ-A00006', region: 'A', shop: 'V.S.P STORE', owner: 'Yasmeen', phone: '0315-7022729', status: '已投放' },
-                    { id: 'FZ-A00009', region: 'A', shop: 'AL-SADDAT STORE', owner: 'AHMED', phone: '0321-2899218', status: '已投放' },
-                    { id: 'FZ-A00012', region: 'A', shop: 'D.MART', owner: 'Rizwan ali', phone: '0323-3337441', status: '已投放' },
-                    { id: 'FZ-A00013', region: 'A', shop: 'JALIL BROTHERS', owner: 'Abdul jalil', phone: '0345-2615285', status: '已投放' },
-                    { id: 'FZ-A00014', region: 'A', shop: 'PARADISE GENERAL STORE', owner: 'Bakhtiar ahmed', phone: '0335-2544571', status: '已投放' },
-                    { id: 'FZ-A00101', region: 'B', shop: 'Bazaar Store', owner: 'Ali', phone: '0300-1111111', status: '已投放' },
-                    { id: 'FZ-A00102', region: 'B', shop: 'Corner Mart', owner: 'Ahmed', phone: '0300-2222222', status: '已投放' },
-                    { id: 'FZ-A00103', region: 'B', shop: 'Super Store', owner: 'Kamran', phone: '0300-3333333', status: '已投放' },
-                    { id: 'FZ-A00104', region: 'B', shop: 'Metro Mart', owner: 'Sara', phone: '0300-4444444', status: '已投放' },
-                    { id: 'FZ-A00105', region: 'B', shop: 'City Store', owner: 'Usman', phone: '0300-5555555', status: '已投放' },
-                    { id: 'FZ-A00201', region: 'C', shop: 'Market Shop', owner: 'Sara', phone: '0300-6666666', status: '已投放' },
-                    { id: 'FZ-A00202', region: 'C', shop: 'Mini Mart', owner: 'Usman', phone: '0300-7777777', status: '已投放' },
-                    { id: 'FZ-A00203', region: 'C', shop: 'Corner Shop', owner: 'Ali', phone: '0300-8888888', status: '已投放' },
-                    { id: 'FZ-A00204', region: 'C', shop: 'Family Store', owner: 'Ahmed', phone: '0300-9999999', status: '已投放' },
-                    { id: 'FZ-A00205', region: 'C', shop: 'New Mart', owner: 'Kamran', phone: '0300-0000000', status: '已投放' }
+                    { id: 'FZ-A00006', region: 'A', shop: 'V.S.P STORE', owner: 'Yasmeen', phone: '0315-7022729' },
+                    { id: 'FZ-A00009', region: 'A', shop: 'AL-SADDAT', owner: 'AHMED', phone: '0321-2899218' },
+                    { id: 'FZ-A00012', region: 'A', shop: 'D.MART', owner: 'Rizwan', phone: '0323-3337441' },
+                    { id: 'FZ-A00101', region: 'B', shop: 'Bazaar Store', owner: 'Ali', phone: '0300-1111111' },
+                    { id: 'FZ-A00102', region: 'B', shop: 'Corner Mart', owner: 'Ahmed', phone: '0300-2222222' },
+                    { id: 'FZ-A00201', region: 'C', shop: 'Market Shop', owner: 'Sara', phone: '0300-6666666' }
                 ];
             }
         }
 
-        // ========== 登录函数 ==========
-        window.handleLogin = function() {
-            console.log('登录函数被调用');
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
+        // ===== LANGUAGE =====
+        function updateUILanguage() {
+            const t = translations[currentLang];
             
-            if (users[username] && users[username].password === password) {
-                currentUser = {
-                    username: username,
-                    role: users[username].role,
-                    region: users[username].region,
-                    name: users[username].name,
-                    nameEn: users[username].nameEn
-                };
-                
-                if (remember) {
-                    localStorage.setItem('aice_user', JSON.stringify(currentUser));
-                }
+            const elements = [
+                'usernameLabel', 'passwordLabel', 'rememberLabel', 'loginBtn',
+                'logoutBtn', 'step1Title', 'step2Title', 'openCameraBtn',
+                'uploadBtn', 'cancelBtn', 'photoModalTitle'
+            ];
+            
+            elements.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = t[id];
+            });
+            
+            const tagline = document.getElementById('loginTagline');
+            if (tagline) tagline.innerHTML = t.loginTagline;
+            
+            const preview = document.getElementById('camera-preview');
+            if (preview && !preview.querySelector('img')) {
+                preview.textContent = t.cameraPreview;
+            }
+            
+            const select = document.getElementById('remarkType');
+            if (select) {
+                select.options[0].text = t.remarkNormal;
+                select.options[1].text = t.remarkUnused;
+                select.options[2].text = t.remarkDirtyInside;
+                select.options[3].text = t.remarkOtherAd;
+                select.options[4].text = t.remarkTemperature;
+                select.options[5].text = t.remarkDamaged;
+                select.options[6].text = t.remarkOther;
+            }
+            
+            const detail = document.getElementById('remarkDetail');
+            if (detail) detail.placeholder = t.remarkDetailPlaceholder;
+        }
+
+        window.switchLanguage = function(lang) {
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            
+            document.getElementById('langZhBtn').classList.toggle('active', lang === 'zh');
+            document.getElementById('langEnBtn').classList.toggle('active', lang === 'en');
+            
+            updateUILanguage();
+            
+            if (currentUser) {
+                document.getElementById('displayName').textContent = lang === 'zh' ? currentUser.name : currentUser.nameEn;
+                if (currentUser.role === 'sales') showSalesView();
+                else if (currentUser.role === 'office') showOfficeView();
+                else showBossView();
+            }
+        };
+
+        // ===== LOGIN =====
+        window.handleLogin = function() {
+            const uid = document.getElementById('username').value;
+            const pwd = document.getElementById('password').value;
+            const rem = document.getElementById('remember').checked;
+            
+            if (users[uid] && users[uid].password === pwd) {
+                currentUser = { username: uid, ...users[uid] };
+                if (rem) localStorage.setItem('aice_user', JSON.stringify(currentUser));
                 
                 document.getElementById('loginPage').classList.add('hidden');
                 document.getElementById('mainPage').classList.remove('hidden');
-                
                 document.getElementById('displayName').textContent = currentLang === 'zh' ? currentUser.name : currentUser.nameEn;
                 
-                const today = new Date();
-                document.getElementById('currentDate').textContent = 
-                    today.getFullYear() + '年' + (today.getMonth() + 1) + '月' + today.getDate() + '日';
+                const d = new Date();
+                document.getElementById('currentDate').textContent = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
                 
-                if (currentUser.role === 'sales') {
-                    showSalesView();
-                } else if (currentUser.role === 'office') {
-                    showOfficeView();
-                } else if (currentUser.role === 'boss') {
-                    showBossView();
-                }
+                if (currentUser.role === 'sales') showSalesView();
+                else if (currentUser.role === 'office') showOfficeView();
+                else showBossView();
                 
-                alert('登录成功！欢迎 ' + currentUser.name);
+                alert(`Welcome ${currentUser.name}`);
             } else {
-                alert('编号或密码错误，请使用 001-005 / 123456');
+                alert('Invalid credentials. Use 001-005 / 123456');
             }
         };
 
@@ -1147,520 +876,14 @@
             document.getElementById('mainPage').classList.add('hidden');
         };
 
-        window.switchLanguage = function(lang) {
-            currentLang = lang;
-            localStorage.setItem('language', lang);
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (currentUser) {
-                document.getElementById('displayName').textContent = currentLang === 'zh' ? currentUser.name : currentUser.nameEn;
-                if (currentUser.role === 'sales') showSalesView();
-                else if (currentUser.role === 'office') showOfficeView();
-                else if (currentUser.role === 'boss') showBossView();
-            }
-        };
-
-        // ========== 图片全屏查看 ==========
-        window.viewFullscreen = function(src) {
-            document.getElementById('fullscreenImage').src = src;
-            document.getElementById('fullscreenModal').classList.remove('hidden');
-        };
-
-        window.closeFullscreen = function() {
-            document.getElementById('fullscreenModal').classList.add('hidden');
-        };
-
-        // ========== 业务员视图 ==========
-        window.showSalesView = function() {
-            const t = translations[currentLang];
-            document.getElementById('navBar').innerHTML = `
-                <div class="nav-item active" onclick="switchSalesTab('tasks')">${t.todayTasks}</div>
-                <div class="nav-item" onclick="switchSalesTab('history')">${t.myRecords}</div>
-                <div class="nav-item" onclick="switchSalesTab('stats')">${t.progress}</div>
-            `;
-            showSalesTasks();
-        };
-
-        window.switchSalesTab = function(tab) {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (tab === 'tasks') showSalesTasks();
-            else if (tab === 'history') showSalesHistory();
-            else if (tab === 'stats') showSalesStats();
-        };
-
-        function showSalesTasks() {
-            const t = translations[currentLang];
-            const region = currentUser.region;
-            const taskIds = todayTasks[region] || [];
-            
-            // 直接用原始ID匹配（如 FZ-A00006）
-            const tasks = taskIds.map(id => freezers.find(f => f.id === id)).filter(f => f);
-            
-            let html = `
-                <div class="stats-card">
-                    <div class="stats-title">📋 ${t.todayTasks}</div>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">${tasks.length}</div>
-                            <div class="stat-label">${t.totalFreezers}</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">${tasks.filter(t => hasPhotoToday(t.id)).length}</div>
-                            <div class="stat-label">${t.completed}</div>
-                        </div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${(tasks.filter(t => hasPhotoToday(t.id)).length / tasks.length * 100) || 0}%"></div>
-                    </div>
-                </div>
-                <div class="task-list">
-            `;
-            
-            tasks.forEach(task => {
-                const photo = photos.find(p => p.freezerId === task.id && isToday(new Date(p.time)));
-                html += `
-                    <div class="task-item">
-                        <div class="task-header">
-                            <span class="freezer-id">${task.id}</span>
-                            <span class="shop-name">${task.shop}</span>
-                        </div>
-                        <div class="shop-details">
-                            店主：${task.owner} | ${task.phone}
-                        </div>
-                        ${photo && photo.remark ? `
-                            <div class="remark-badge">${photo.remark.text}</div>
-                            ${photo.remark.detail ? `<div class="remark-detail">${photo.remark.detail}</div>` : ''}
-                        ` : ''}
-                        <div class="task-footer">
-                            <span class="time">${photo ? '✅ ' + t.completed + ' ' + formatTime(photo.time) : '⏳ ' + t.waiting}</span>
-                            <button class="photo-btn ${photo ? 'completed' : ''}" onclick="openPhotoModal('${task.id}')" ${photo ? 'disabled' : ''}>
-                                ${photo ? t.completed : t.photo}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += '</div>';
-            document.getElementById('content').innerHTML = html;
-        }
-
-        function showSalesHistory() {
-            const t = translations[currentLang];
-            const myPhotos = photos.filter(p => p.sales === currentUser.username);
-            
-            if (myPhotos.length === 0) {
-                document.getElementById('content').innerHTML = '<div class="stats-card">暂无记录</div>';
-                return;
-            }
-            
-            let html = '<div class="task-list">';
-            
-            myPhotos.sort((a, b) => new Date(b.time) - new Date(a.time)).forEach(photo => {
-                const freezer = freezers.find(f => f.id === photo.freezerId);
-                html += `
-                    <div class="task-item">
-                        <div class="task-header">
-                            <span class="freezer-id">${photo.freezerId}</span>
-                            <span class="shop-name">${freezer ? freezer.shop : ''}</span>
-                        </div>
-                        <div class="time">${formatDateTime(photo.time)}</div>
-                        ${photo.photo ? `
-                            <div style="margin-top:10px;">
-                                <img src="${photo.photo}" class="photo-thumb" onclick="viewFullscreen('${photo.photo}')">
-                            </div>
-                        ` : ''}
-                        ${photo.remark ? `
-                            <div class="remark-badge">${photo.remark.text}</div>
-                            ${photo.remark.detail ? `<div class="remark-detail">${photo.remark.detail}</div>` : ''}
-                        ` : ''}
-                    </div>
-                `;
-            });
-            
-            html += '</div>';
-            document.getElementById('content').innerHTML = html;
-        }
-
-        function showSalesStats() {
-            const t = translations[currentLang];
-            const region = currentUser.region;
-            const regionFreezers = freezers.filter(f => f.region === region);
-            const myPhotos = photos.filter(p => p.sales === currentUser.username);
-            
-            const thisWeek = myPhotos.filter(p => isThisWeek(new Date(p.time))).length;
-            const thisMonth = myPhotos.filter(p => isThisMonth(new Date(p.time))).length;
-            const today = myPhotos.filter(p => isToday(new Date(p.time))).length;
-            
-            const lastPhotos = {};
-            regionFreezers.forEach(f => {
-                const photo = photos.filter(p => p.freezerId === f.id).sort((a, b) => new Date(b.time) - new Date(a.time))[0];
-                if (photo) {
-                    lastPhotos[f.id] = getDaysAgo(photo.time);
-                }
-            });
-            
-            const overdue = Object.entries(lastPhotos).filter(([id, days]) => days > 7).length;
-            
-            let html = `
-                <div class="stats-card">
-                    <div class="stats-title">📊 ${t.myRecords}</div>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">${today}</div>
-                            <div class="stat-label">${t.todayPhotos}</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">${thisWeek}</div>
-                            <div class="stat-label">${t.weekPhotos}</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">${thisMonth}</div>
-                            <div class="stat-label">${t.monthPhotos}</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value ${overdue > 0 ? 'warning' : ''}">${overdue}</div>
-                            <div class="stat-label">${t.overdue}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('content').innerHTML = html;
-        }
-
-        // ========== 办公室视图 ==========
-        window.showOfficeView = function() {
-            const t = translations[currentLang];
-            document.getElementById('navBar').innerHTML = `
-                <div class="nav-item active" onclick="switchOfficeTab('sync')">${t.syncTasks}</div>
-                <div class="nav-item" onclick="switchOfficeTab('freezers')">${t.freezerSearch}</div>
-                <div class="nav-item" onclick="switchOfficeTab('stats')">${t.regionStats}</div>
-                <div class="nav-item" onclick="switchOfficeTab('alerts')">${t.alerts}</div>
-            `;
-            showSyncView();
-        };
-
-        window.switchOfficeTab = function(tab) {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (tab === 'sync') showSyncView();
-            else if (tab === 'freezers') showFreezerSearch();
-            else if (tab === 'stats') showRegionStats();
-            else if (tab === 'alerts') showAlerts();
-        };
-
-        // ========== 同步任务（按模板格式，只支持中文冒号）==========
-        window.syncTasks = function() {
-            const text = document.getElementById('syncText').value;
-            console.log('同步文本:', text);
-            
-            // 按行分割
-            const lines = text.split('\n');
-            
-            lines.forEach(line => {
-                // 匹配 区域A：FZ-A00006, FZ-A00009 这种格式
-                const match = line.match(/区域([ABC])：\s*(.+)/);
-                if (match) {
-                    const region = match[1];
-                    const idsPart = match[2];
-                    // 按逗号或空格分割
-                    const ids = idsPart.split(/[,，\s]+/).filter(id => id.startsWith('FZ-'));
-                    console.log(`区域${region} 任务:`, ids);
-                    if (ids.length > 0) {
-                        todayTasks[region] = ids;
-                    }
-                }
-            });
-            
-            const totalTasks = Object.values(todayTasks).flat().length;
-            alert(`任务同步成功！共 ${totalTasks} 个任务`);
-            showSyncView();
-        };
-
-        function showSyncView() {
-            const t = translations[currentLang];
-            let html = `
-                <div class="sync-card">
-                    <div class="stats-title">📱 ${t.syncTasks}</div>
-                    <div style="color: #666; font-size: 14px; margin-bottom: 10px;">
-                        ${currentLang === 'zh' ? '请按以下模板格式输入：' : 'Please use this format:'}
-                    </div>
-                    <div style="background: #f5f5f5; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; color: #333;">
-                        区域A：FZ-A00006, FZ-A00009, FZ-A00012<br>
-                        区域B：FZ-A00101, FZ-A00102, FZ-A00103<br>
-                        区域C：FZ-A00201, FZ-A00202, FZ-A00203
-                    </div>
-                    <textarea class="sync-textarea" id="syncText" placeholder="区域A：FZ-A00006, FZ-A00009, FZ-A00012"></textarea>
-                    <button class="sync-btn" onclick="syncTasks()">${t.sync}</button>
-                </div>
-            `;
-            
-            // 显示当前任务
-            html += '<div class="region-tasks"><div class="stats-title">今日任务</div>';
-            for (let region in todayTasks) {
-                if (todayTasks[region].length > 0) {
-                    html += `<div class="region-title">区域${region} (${todayTasks[region].length})</div>`;
-                    todayTasks[region].forEach(id => {
-                        html += `<span class="freezer-tag">${id}</span>`;
-                    });
-                }
-            }
-            html += '</div>';
-            
-            document.getElementById('content').innerHTML = html;
-        }
-
-        function showFreezerSearch() {
-            const t = translations[currentLang];
-            let html = `
-                <div class="search-box">
-                    <input type="text" id="searchFreezer" placeholder="FZ-A00006">
-                    <button class="photo-btn" onclick="searchFreezer()">${t.search}</button>
-                </div>
-                <div id="searchResult"></div>
-            `;
-            document.getElementById('content').innerHTML = html;
-        }
-
-        window.searchFreezer = function() {
-            const searchId = document.getElementById('searchFreezer').value.trim();
-            const freezer = freezers.find(f => f.id === searchId);
-            
-            if (!freezer) {
-                document.getElementById('searchResult').innerHTML = '<div class="stats-card">❌ 未找到</div>';
-                return;
-            }
-            
-            const freezerPhotos = photos.filter(p => p.freezerId === freezer.id).sort((a, b) => new Date(b.time) - new Date(a.time));
-            
-            let html = `
-                <div class="stats-card">
-                    <div class="stats-title">${freezer.id}</div>
-                    <div class="stat-row">
-                        <span>商店</span>
-                        <span class="stat-value">${freezer.shop}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span>店主</span>
-                        <span class="stat-value">${freezer.owner}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span>电话</span>
-                        <span class="stat-value">${freezer.phone}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span>区域</span>
-                        <span class="stat-value">${freezer.region}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span>累计拍照</span>
-                        <span class="stat-value">${freezerPhotos.length}</span>
-                    </div>
-                </div>
-            `;
-            
-            if (freezerPhotos.length > 0) {
-                html += '<div class="stats-card"><div class="stats-title">最近照片</div>';
-                freezerPhotos.slice(0, 3).forEach(photo => {
-                    html += `
-                        <div style="margin-bottom:10px;">
-                            <div class="time">${formatDateTime(photo.time)}</div>
-                            ${photo.photo ? `<img src="${photo.photo}" class="photo-thumb" onclick="viewFullscreen('${photo.photo}')">` : ''}
-                            ${photo.remark ? `<div class="remark-badge">${photo.remark.text}</div>` : ''}
-                        </div>
-                    `;
-                });
-                html += '</div>';
-            }
-            
-            document.getElementById('searchResult').innerHTML = html;
-        };
-
-        function showRegionStats() {
-            const t = translations[currentLang];
-            const regions = ['A', 'B', 'C'];
-            
-            let html = '<div class="stats-card"><div class="stats-title">📍 ' + t.regionStats + '</div><div class="region-list">';
-            
-            regions.forEach(region => {
-                const regionFreezers = freezers.filter(f => f.region === region);
-                const todayCount = photos.filter(p => regionFreezers.some(f => f.id === p.freezerId) && isToday(new Date(p.time))).length;
-                const percent = Math.round(todayCount / regionFreezers.length * 100) || 0;
-                
-                let percentClass = 'low';
-                if (percent >= 80) percentClass = 'high';
-                else if (percent >= 50) percentClass = 'medium';
-                
-                html += `
-                    <div class="region-item">
-                        <div class="region-header">
-                            <span class="region-name">${currentLang === 'zh' ? '区域' : 'Region'}${region}</span>
-                            <div class="region-stats">
-                                <span class="region-count">${todayCount}/${regionFreezers.length}</span>
-                                <span class="region-percent ${percentClass}">${percent}%</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${percent}%"></div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += '</div></div>';
-            document.getElementById('content').innerHTML = html;
-        }
-
-        function showAlerts() {
-            const t = translations[currentLang];
-            const alerts = [];
-            freezers.forEach(freezer => {
-                const lastPhoto = photos.filter(p => p.freezerId === freezer.id).sort((a, b) => new Date(b.time) - new Date(a.time))[0];
-                const daysAgo = lastPhoto ? getDaysAgo(lastPhoto.time) : 999;
-                
-                if (daysAgo > 7 || !lastPhoto) {
-                    alerts.push({
-                        freezer: freezer,
-                        daysAgo: daysAgo,
-                        lastPhoto: lastPhoto
-                    });
-                }
-            });
-            
-            alerts.sort((a, b) => b.daysAgo - a.daysAgo);
-            
-            let html = `
-                <div class="stats-card">
-                    <div class="stats-title">⚠️ ${t.alerts} (${alerts.length})</div>
-            `;
-            
-            if (alerts.length === 0) {
-                html += '<div style="text-align:center; padding:30px; color:#00a65a;">✅ ' + (currentLang === 'zh' ? '一切正常' : 'All good') + '</div>';
-            } else {
-                html += '<div class="task-list">';
-                alerts.slice(0, 10).forEach(alert => {
-                    const days = alert.daysAgo === 999 ? (currentLang === 'zh' ? '新冰柜' : 'New') : alert.daysAgo + (currentLang === 'zh' ? '天' : 'd');
-                    html += `
-                        <div class="task-item" style="border-left: 4px solid #ff4444;">
-                            <div class="task-header">
-                                <span class="freezer-id">${alert.freezer.id}</span>
-                                <span class="shop-name">${alert.freezer.shop}</span>
-                            </div>
-                            <div style="color:#ff4444; font-size:13px;">⚠️ ${days} ${currentLang === 'zh' ? '未拍照' : 'no photo'}</div>
-                            ${alert.lastPhoto ? `
-                                <div class="time">最后拍照：${formatDateTime(alert.lastPhoto.time)}</div>
-                            ` : ''}
-                        </div>
-                    `;
-                });
-                html += '</div>';
-            }
-            
-            html += '</div>';
-            document.getElementById('content').innerHTML = html;
-        }
-
-        // ========== 老板视图 ==========
-        window.showBossView = function() {
-            const t = translations[currentLang];
-            document.getElementById('navBar').innerHTML = `
-                <div class="nav-item active" onclick="switchBossTab('overview')">${t.overview}</div>
-                <div class="nav-item" onclick="switchBossTab('regions')">${t.regions}</div>
-                <div class="nav-item" onclick="switchBossTab('sales')">${t.salesmen}</div>
-                <div class="nav-item" onclick="switchBossTab('alerts')">${t.alerts}</div>
-            `;
-            showBossOverview();
-        };
-
-        window.switchBossTab = function(tab) {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (tab === 'overview') showBossOverview();
-            else if (tab === 'regions') showRegionStats();
-            else if (tab === 'sales') showBossSales();
-            else if (tab === 'alerts') showAlerts();
-        };
-
-        function showBossOverview() {
-            const t = translations[currentLang];
-            
-            const totalFreezers = freezers.length;
-            const todayPhotos = photos.filter(p => isToday(new Date(p.time))).length;
-            const weekPhotos = photos.filter(p => isThisWeek(new Date(p.time))).length;
-            const monthPhotos = photos.filter(p => isThisMonth(new Date(p.time))).length;
-            
-            let html = `
-                <div class="stats-card">
-                    <div class="stats-title">📊 ${t.overview}</div>
-                    <div class="stats-grid">
-                        <div class="stat-item"><div class="stat-value">${totalFreezers}</div><div class="stat-label">${t.totalFreezers}</div></div>
-                        <div class="stat-item"><div class="stat-value">${todayPhotos}</div><div class="stat-label">${t.todayPhotos}</div></div>
-                        <div class="stat-item"><div class="stat-value">${weekPhotos}</div><div class="stat-label">${t.weekPhotos}</div></div>
-                        <div class="stat-item"><div class="stat-value">${monthPhotos}</div><div class="stat-label">${t.monthPhotos}</div></div>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('content').innerHTML = html;
-        }
-
-        function showBossSales() {
-            const t = translations[currentLang];
-            const salesmen = [
-                { username: '001', name: '业务员001', region: 'A' },
-                { username: '002', name: '业务员002', region: 'B' },
-                { username: '003', name: '业务员003', region: 'C' }
-            ];
-            
-            let html = '<div class="stats-card"><div class="stats-title">👥 ' + t.salesmen + '</div><div class="region-list">';
-            
-            salesmen.forEach(s => {
-                const salesPhotos = photos.filter(p => p.sales === s.username);
-                const today = salesPhotos.filter(p => isToday(new Date(p.time))).length;
-                const week = salesPhotos.filter(p => isThisWeek(new Date(p.time))).length;
-                const month = salesPhotos.filter(p => isThisMonth(new Date(p.time))).length;
-                
-                const responsible = freezers.filter(f => f.region === s.region).length;
-                
-                html += `
-                    <div class="region-item">
-                        <div class="region-header">
-                            <span class="region-name">${s.name}</span>
-                            <span class="region-count">${t.weekPhotos} ${week}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin: 5px 0; font-size:13px;">
-                            <span>${t.todayPhotos}: ${today}</span>
-                            <span>${t.monthPhotos}: ${month}</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${Math.min(100, week/25*100)}%"></div>
-                        </div>
-                        <div style="font-size:12px; color:#999;">负责 ${responsible} 台</div>
-                    </div>
-                `;
-            });
-            
-            html += '</div></div>';
-            document.getElementById('content').innerHTML = html;
-        }
-
-        // ========== 拍照相关 ==========
-        window.openPhotoModal = function(freezerId) {
-            currentFreezer = freezerId;
-            document.getElementById('modalFreezerId').textContent = freezerId;
+        // ===== PHOTO FUNCTIONS =====
+        window.openPhotoModal = function(id) {
+            currentFreezer = id;
+            document.getElementById('modalFreezerId').textContent = id;
             document.getElementById('photoModal').classList.remove('hidden');
-            
-            document.getElementById('remarkType').value = 'normal';
             document.getElementById('remarkDetail').value = '';
             document.getElementById('charCount').textContent = '0';
-            document.getElementById('camera-preview').innerHTML = '相机预览区域';
+            document.getElementById('camera-preview').innerHTML = translations[currentLang].cameraPreview;
         };
 
         window.closePhotoModal = function() {
@@ -1673,36 +896,31 @@
         };
 
         document.getElementById('camera-input').addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                const file = e.target.files[0];
+            if (e.target.files.length) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = e => {
                     document.getElementById('camera-preview').innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;">`;
                 };
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(e.target.files[0]);
             }
         });
 
         window.uploadPhoto = function() {
             if (!currentFreezer) return;
+            const img = document.getElementById('camera-preview').querySelector('img');
+            if (!img) {
+                alert(translations[currentLang].cameraPreview === '相机预览区域' ? '请先拍照' : 'Take a photo first');
+                return;
+            }
             
             const remarkType = document.getElementById('remarkType').value;
             const remarkDetail = document.getElementById('remarkDetail').value;
-            
-            // 获取照片数据
-            const photoImg = document.getElementById('camera-preview').querySelector('img');
-            const photoData = photoImg ? photoImg.src : null;
-            
-            if (!photoData) {
-                alert('请先拍照');
-                return;
-            }
             
             const photo = {
                 freezerId: currentFreezer,
                 time: new Date().toISOString(),
                 sales: currentUser.username,
-                photo: photoData,
+                photo: img.src,
                 remark: {
                     type: remarkType,
                     text: getRemarkText(remarkType, currentLang),
@@ -1719,68 +937,342 @@
             }
         };
 
-        // ========== 工具函数 ==========
-        function hasPhotoToday(freezerId) {
-            return photos.some(p => p.freezerId === freezerId && isToday(new Date(p.time)));
+        window.viewFullscreen = function(src) {
+            document.getElementById('fullscreenImage').src = src;
+            document.getElementById('fullscreenModal').classList.remove('hidden');
+        };
+
+        window.closeFullscreen = function() {
+            document.getElementById('fullscreenModal').classList.add('hidden');
+        };
+
+        document.getElementById('remarkDetail').addEventListener('input', e => {
+            document.getElementById('charCount').textContent = e.target.value.length;
+        });
+
+        // ===== SALES VIEW =====
+        window.showSalesView = function() {
+            const t = translations[currentLang];
+            document.getElementById('navBar').innerHTML = `
+                <div class="nav-item active" onclick="switchSalesTab('tasks')">${t.todayTasks}</div>
+                <div class="nav-item" onclick="switchSalesTab('history')">${t.myRecords}</div>
+                <div class="nav-item" onclick="switchSalesTab('stats')">${t.progress}</div>
+            `;
+            showSalesTasks();
+        };
+
+        window.switchSalesTab = function(tab) {
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            event.target.classList.add('active');
+            if (tab === 'tasks') showSalesTasks();
+            else if (tab === 'history') showSalesHistory();
+            else showSalesStats();
+        };
+
+        function showSalesTasks() {
+            const t = translations[currentLang];
+            const tasks = (todayTasks[currentUser.region] || []).map(id => freezers.find(f => f.id === id)).filter(f => f);
+            
+            let html = `
+                <div class="stats-card">
+                    <div class="stats-title">📋 ${t.todayTasks}</div>
+                    <div class="stats-grid">
+                        <div class="stat-item"><div class="stat-value">${tasks.length}</div><div class="stat-label">${t.totalFreezers}</div></div>
+                        <div class="stat-item"><div class="stat-value">${tasks.filter(t => hasPhotoToday(t.id)).length}</div><div class="stat-label">${t.completed}</div></div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: ${tasks.length ? (tasks.filter(t => hasPhotoToday(t.id)).length / tasks.length * 100) : 0}%"></div></div>
+                </div>
+                <div class="task-list">
+            `;
+            
+            tasks.forEach(task => {
+                const photo = photos.find(p => p.freezerId === task.id && isToday(p.time));
+                html += `
+                    <div class="task-item">
+                        <div class="task-header">
+                            <span class="freezer-id">${task.id}</span>
+                            <span class="shop-name">${task.shop}</span>
+                        </div>
+                        <div class="shop-details">${task.owner} | ${task.phone}</div>
+                        ${photo && photo.remark ? `<div style="font-size:12px; color:var(--text-light); margin-bottom:8px;">📝 ${photo.remark.text}</div>` : ''}
+                        <div class="task-footer">
+                            <span class="time">${photo ? '✅' : '⏳'}</span>
+                            <button class="photo-btn ${photo ? 'completed' : ''}" onclick="openPhotoModal('${task.id}')" ${photo ? 'disabled' : ''}>
+                                ${photo ? t.completed : t.photo}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('content').innerHTML = html + '</div>';
+        }
+
+        function showSalesHistory() {
+            const t = translations[currentLang];
+            const myPhotos = photos.filter(p => p.sales === currentUser.username);
+            if (!myPhotos.length) {
+                document.getElementById('content').innerHTML = '<div class="stats-card">暂无记录</div>';
+                return;
+            }
+            
+            let html = '<div class="task-list">';
+            myPhotos.sort((a, b) => new Date(b.time) - new Date(a.time)).forEach(p => {
+                const f = freezers.find(f => f.id === p.freezerId);
+                html += `
+                    <div class="task-item">
+                        <div class="task-header">
+                            <span class="freezer-id">${p.freezerId}</span>
+                            <span class="shop-name">${f ? f.shop : ''}</span>
+                        </div>
+                        <div class="time">${new Date(p.time).toLocaleString()}</div>
+                        ${p.photo ? `<img src="${p.photo}" class="photo-thumb" onclick="viewFullscreen('${p.photo}')">` : ''}
+                        ${p.remark ? `<div style="margin-top:8px;">📝 ${p.remark.text} ${p.remark.detail ? '- ' + p.remark.detail : ''}</div>` : ''}
+                    </div>
+                `;
+            });
+            document.getElementById('content').innerHTML = html + '</div>';
+        }
+
+        function showSalesStats() {
+            const t = translations[currentLang];
+            const myPhotos = photos.filter(p => p.sales === currentUser.username);
+            const today = myPhotos.filter(p => isToday(p.time)).length;
+            const week = myPhotos.filter(p => isThisWeek(p.time)).length;
+            const month = myPhotos.filter(p => isThisMonth(p.time)).length;
+            
+            document.getElementById('content').innerHTML = `
+                <div class="stats-card">
+                    <div class="stats-title">📊 ${t.myRecords}</div>
+                    <div class="stats-grid">
+                        <div class="stat-item"><div class="stat-value">${today}</div><div class="stat-label">${t.todayPhotos}</div></div>
+                        <div class="stat-item"><div class="stat-value">${week}</div><div class="stat-label">${t.weekPhotos}</div></div>
+                        <div class="stat-item"><div class="stat-value">${month}</div><div class="stat-label">${t.monthPhotos}</div></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== OFFICE VIEW =====
+        window.showOfficeView = function() {
+            const t = translations[currentLang];
+            document.getElementById('navBar').innerHTML = `
+                <div class="nav-item active" onclick="switchOfficeTab('sync')">${t.syncTasks}</div>
+                <div class="nav-item" onclick="switchOfficeTab('stats')">${t.regionStats}</div>
+                <div class="nav-item" onclick="switchOfficeTab('alerts')">${t.alerts}</div>
+            `;
+            showSyncView();
+        };
+
+        window.switchOfficeTab = function(tab) {
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            event.target.classList.add('active');
+            if (tab === 'sync') showSyncView();
+            else if (tab === 'stats') showRegionStats();
+            else showAlerts();
+        };
+
+        window.syncTasks = function() {
+            const text = document.getElementById('syncText').value;
+            const lines = text.split('\n');
+            
+            lines.forEach(line => {
+                const match = line.match(/区域([ABC])：\s*(.+)/);
+                if (match) {
+                    const region = match[1];
+                    const ids = match[2].split(/[,，\s]+/).filter(id => id.startsWith('FZ-'));
+                    if (ids.length) todayTasks[region] = ids;
+                }
+            });
+            
+            alert(`同步成功！共 ${Object.values(todayTasks).flat().length} 个任务`);
+            showSyncView();
+        };
+
+        function showSyncView() {
+            const t = translations[currentLang];
+            let html = `
+                <div class="stats-card">
+                    <div class="stats-title">📱 ${t.syncTasks}</div>
+                    <div style="background:#f5f5f5; padding:12px; border-radius:12px; margin-bottom:12px; font-size:13px;">
+                        区域A：FZ-A00006, FZ-A00009<br>
+                        区域B：FZ-A00101, FZ-A00102
+                    </div>
+                    <textarea class="sync-textarea" id="syncText" placeholder="区域A：FZ-A00006, FZ-A00009"></textarea>
+                    <button class="sync-btn" onclick="syncTasks()">${t.sync}</button>
+                </div>
+            `;
+            
+            html += '<div class="stats-card"><div class="stats-title">今日任务</div>';
+            for (let r in todayTasks) {
+                if (todayTasks[r].length) {
+                    html += `<div style="font-weight:600; margin-top:10px;">区域${r}</div>`;
+                    todayTasks[r].forEach(id => html += `<span class="freezer-tag">${id}</span>`);
+                }
+            }
+            document.getElementById('content').innerHTML = html + '</div>';
+        }
+
+        function showRegionStats() {
+            const regions = ['A', 'B', 'C'];
+            let html = '<div class="stats-card"><div class="stats-title">📍 区域统计</div>';
+            regions.forEach(r => {
+                const regionFreezers = freezers.filter(f => f.region === r);
+                const todayCount = photos.filter(p => regionFreezers.some(f => f.id === p.freezerId) && isToday(p.time)).length;
+                const percent = Math.round(todayCount / regionFreezers.length * 100) || 0;
+                html += `
+                    <div style="margin:15px 0;">
+                        <div style="display:flex; justify-content:space-between;">区域${r} <span>${todayCount}/${regionFreezers.length}</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div>
+                    </div>
+                `;
+            });
+            document.getElementById('content').innerHTML = html + '</div>';
+        }
+
+        function showAlerts() {
+            const alerts = freezers.filter(f => {
+                const last = photos.filter(p => p.freezerId === f.id).sort((a,b) => new Date(b.time) - new Date(a.time))[0];
+                return !last || (new Date() - new Date(last.time)) > 7*24*60*60*1000;
+            });
+            
+            let html = `<div class="stats-card"><div class="stats-title">⚠️ 预警 (${alerts.length})</div>`;
+            if (!alerts.length) html += '<div>✅ 一切正常</div>';
+            else alerts.slice(0,10).forEach(f => html += `<div style="padding:8px 0; border-bottom:1px solid var(--border);">${f.id} - ${f.shop}</div>`);
+            document.getElementById('content').innerHTML = html + '</div>';
+        }
+
+        // ===== BOSS VIEW =====
+        window.showBossView = function() {
+            const t = translations[currentLang];
+            document.getElementById('navBar').innerHTML = `
+                <div class="nav-item active" onclick="switchBossTab('overview')">${t.overview}</div>
+                <div class="nav-item" onclick="switchBossTab('regions')">${t.regions}</div>
+                <div class="nav-item" onclick="switchBossTab('sales')">${t.salesmen}</div>
+                <div class="nav-item" onclick="switchBossTab('alerts')">${t.alerts}</div>
+            `;
+            showBossOverview();
+        };
+
+        window.switchBossTab = function(tab) {
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            event.target.classList.add('active');
+            if (tab === 'overview') showBossOverview();
+            else if (tab === 'regions') showRegionStats();
+            else if (tab === 'sales') showBossSales();
+            else showAlerts();
+        };
+
+        function showBossOverview() {
+            const t = translations[currentLang];
+            const total = freezers.length;
+            const today = photos.filter(p => isToday(p.time)).length;
+            const week = photos.filter(p => isThisWeek(p.time)).length;
+            const month = photos.filter(p => isThisMonth(p.time)).length;
+            
+            // 统计问题冰柜
+            const problems = photos.filter(p => {
+                if (!p.remark) return false;
+                const text = p.remark.text || '';
+                return !text.includes('正常') && !text.includes('Normal');
+            }).length;
+            
+            let html = `
+                <div class="stats-card">
+                    <div class="stats-title">📊 ${t.overview}</div>
+                    <div class="stats-grid">
+                        <div class="stat-item"><div class="stat-value">${total}</div><div class="stat-label">${t.totalFreezers}</div></div>
+                        <div class="stat-item"><div class="stat-value">${today}</div><div class="stat-label">${t.todayPhotos}</div></div>
+                        <div class="stat-item"><div class="stat-value">${week}</div><div class="stat-label">${t.weekPhotos}</div></div>
+                        <div class="stat-item"><div class="stat-value">${month}</div><div class="stat-label">${t.monthPhotos}</div></div>
+                    </div>
+                    <div style="margin-top:16px; padding:12px; background:${problems > 0 ? '#fee2e2' : '#f0fdf4'}; border-radius:12px;">
+                        ${problems > 0 ? `⚠️ 问题冰柜：${problems}台` : '✅ 所有冰柜正常'}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('content').innerHTML = html;
+        }
+
+        function showBossSales() {
+            const t = translations[currentLang];
+            const sales = [
+                { name: '业务员001', id: '001', region: 'A' },
+                { name: '业务员002', id: '002', region: 'B' },
+                { name: '业务员003', id: '003', region: 'C' }
+            ];
+            
+            let html = '<div class="stats-card"><div class="stats-title">👥 ' + t.salesmen + '</div>';
+            
+            // 今日排名
+            const todayRank = sales.map(s => ({
+                name: s.name,
+                count: photos.filter(p => p.sales === s.id && isToday(p.time)).length
+            })).sort((a,b) => b.count - a.count);
+            
+            html += '<div style="margin-bottom:16px;"><div style="font-weight:600;">今日排行</div>';
+            todayRank.forEach((s, i) => {
+                const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '👤';
+                html += `<div style="display:flex; justify-content:space-between; padding:8px 0;">${medal} ${s.name} <span style="font-weight:600;">${s.count}张</span></div>`;
+            });
+            html += '</div>';
+            
+            // 本周总计
+            html += '<div><div style="font-weight:600;">本周总计</div>';
+            sales.forEach(s => {
+                const week = photos.filter(p => p.sales === s.id && isThisWeek(p.time)).length;
+                const month = photos.filter(p => p.sales === s.id && isThisMonth(p.time)).length;
+                html += `<div style="display:flex; justify-content:space-between; padding:6px 0;">${s.name} <span>本周${week} / 本月${month}</span></div>`;
+            });
+            html += '</div></div>';
+            
+            document.getElementById('content').innerHTML = html;
+        }
+
+        // ===== UTILS =====
+        function hasPhotoToday(id) {
+            return photos.some(p => p.freezerId === id && isToday(p.time));
         }
 
         function isToday(date) {
-            const today = new Date();
-            return date.getDate() === today.getDate() &&
-                   date.getMonth() === today.getMonth() &&
-                   date.getFullYear() === today.getFullYear();
+            const d = new Date(date);
+            const t = new Date();
+            return d.getDate() === t.getDate() && d.getMonth() === t.getMonth() && d.getFullYear() === t.getFullYear();
         }
 
         function isThisWeek(date) {
-            const today = new Date();
-            const weekAgo = new Date(today);
-            weekAgo.setDate(weekAgo.getDate() - 7);
-            return date >= weekAgo && date <= today;
+            const d = new Date(date);
+            const t = new Date();
+            const w = new Date(t); w.setDate(t.getDate() - 7);
+            return d >= w;
         }
 
         function isThisMonth(date) {
-            const today = new Date();
-            return date.getMonth() === today.getMonth() &&
-                   date.getFullYear() === today.getFullYear();
+            const d = new Date(date);
+            const t = new Date();
+            return d.getMonth() === t.getMonth() && d.getFullYear() === t.getFullYear();
         }
 
-        function getDaysAgo(dateStr) {
-            const date = new Date(dateStr);
-            const today = new Date();
-            const diffTime = today - date;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            return diffDays;
-        }
-
-        function formatTime(dateStr) {
-            const date = new Date(dateStr);
-            return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-        }
-
-        function formatDateTime(dateStr) {
-            const date = new Date(dateStr);
-            return `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-        }
-
-        // ========== 初始化 ==========
+        // ===== INIT =====
         window.onload = async function() {
             await loadFreezersFromSheet();
+            updateUILanguage();
             
-            const savedUser = localStorage.getItem('aice_user');
-            if (savedUser) {
+            const saved = localStorage.getItem('aice_user');
+            if (saved) {
                 try {
-                    currentUser = JSON.parse(savedUser);
+                    currentUser = JSON.parse(saved);
                     document.getElementById('loginPage').classList.add('hidden');
                     document.getElementById('mainPage').classList.remove('hidden');
                     document.getElementById('displayName').textContent = currentLang === 'zh' ? currentUser.name : currentUser.nameEn;
                     
-                    const today = new Date();
-                    document.getElementById('currentDate').textContent = 
-                        today.getFullYear() + '年' + (today.getMonth() + 1) + '月' + today.getDate() + '日';
+                    const d = new Date();
+                    document.getElementById('currentDate').textContent = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
                     
                     if (currentUser.role === 'sales') showSalesView();
                     else if (currentUser.role === 'office') showOfficeView();
-                    else if (currentUser.role === 'boss') showBossView();
+                    else showBossView();
                 } catch (e) {
                     localStorage.removeItem('aice_user');
                 }
